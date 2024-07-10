@@ -14,14 +14,14 @@ end
 reg [31:0] cont_clk = 0; //contador para os ciclos do clock
 
 
-parameter segundo = 10; //ciclos de clock por segundo
-parameter decimo = 1;
+parameter segundo = 5000000; //ciclos de clock por segundo
+parameter decimo = segundo / 10;
 
 always @(posedge clk) begin
 
 	cont_clk <= cont_clk + 1;
 	
-	if (reset) begin
+	if (!reset) begin
 		cont_clk <= 32'd0;
 		cont_seg <= 10'd0;
 		cont_dec <= 4'd0;
