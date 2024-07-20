@@ -1,17 +1,14 @@
 module sete_segmentos (
-	input clk,
-	input reset,
+
+	input [9:0] seg,
+	input [3:0] dec,
 	
 	output reg [0:6] centenas,
 	output reg [0:6] dezenas,
 	output reg [0:6] unidades,
 	output reg [0:6] decimos
 );
-
-contador (.clk(clk), .reset(reset), .cont_seg(seg), .cont_dec(dec));
-
-wire [9:0] seg;
-wire [3:0] dec;
+//
 wire [3:0] num_cent = (seg / 100) % 10;
 wire [3:0] num_dez = (seg / 10) % 10;
 wire [3:0] num_uni = seg % 10;
@@ -77,3 +74,4 @@ always @(*) begin
 end
 
 endmodule 
+

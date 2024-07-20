@@ -1,30 +1,17 @@
 module contador (
     input clk,
-    input reset,
-    input conta,
-    input pausa,
-    input para,
+	 input reset,
+	 input [2:0] estado_atual,
+	 input contando,
 
     output reg [9:0] cont_seg, // contador para os segundos
     output reg [3:0] cont_dec // contador para os decimos de segundo
 );
 
-wire [2:0] estado_atual;
-wire contando;
-
-estados(
-    .clk(clk),
-    .reset(reset),
-    .conta(conta),
-    .pausa(pausa),
-    .para(para),
-    .estado(estado_atual),
-    .contando(contando)
-);
-
+//
 reg [31:0] cont_clk = 0; // contador para os ciclos do clock
 
-parameter segundo = 10; // ciclos de clock por segundo
+parameter segundo = 500000; // ciclos de clock por segundo
 parameter decimo = segundo / 10;
 
 initial begin 
