@@ -6,7 +6,8 @@ module estados(
     input para,
     
     output reg [2:0] estado,
-    output reg contando
+    output reg contando,
+	 output reg enable
 );
 
 parameter inicio = 0, contar = 1, pausar = 2, parar = 3;
@@ -16,45 +17,55 @@ always @(posedge clk or negedge reset) begin // troca de estados
     if (!reset) begin
         estado_atual <= inicio;
         contando <= 0;
+		  enable <= 1;
     end else begin
         case (estado_atual)
             inicio: begin
                 if (conta == 0) begin
                     estado_atual <= contar;
                     contando <= 1;
+						  enable <= 1;
                 end
             end
             contar: begin
                 if (reset == 0) begin
                     estado_atual <= inicio;
                     contando <= 0;
+						  enable <= 1;
                 end else if (pausa == 0) begin
                     estado_atual <= pausar;
                     contando <= 1;
+						  enable <= 0;
                 end else if (para == 0) begin
                     estado_atual <= parar;
                     contando <= 0;
+						  enable <= 1;
                 end
             end
             pausar: begin
                 if (reset == 0) begin
                     estado_atual <= inicio;
                     contando <= 0;
+						  enable <= 1;
                 end else if (conta == 0) begin
                     estado_atual <= contar;
                     contando <= 1;
+						  enable <= 1;
                 end else if (para == 0) begin
                     estado_atual <= parar;
                     contando <= 0;
+						  enable <= 1;
                 end
             end
             parar: begin
                 if (reset == 0) begin
                     estado_atual <= inicio;
                     contando <= 0;
+						  enable <= 1;
                 end else if (conta == 0) begin
                     estado_atual <= contar;
                     contando <= 1;
+						  enable <= 1;
                 end
             end
         endcase

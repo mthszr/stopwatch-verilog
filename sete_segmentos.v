@@ -1,19 +1,26 @@
 module sete_segmentos (
-
 	input [9:0] seg,
 	input [3:0] dec,
+	input enable, 
 	
 	output reg [0:6] centenas,
 	output reg [0:6] dezenas,
 	output reg [0:6] unidades,
 	output reg [0:6] decimos
 );
-//
-wire [3:0] num_cent = (seg / 100) % 10;
-wire [3:0] num_dez = (seg / 10) % 10;
-wire [3:0] num_uni = seg % 10;
+
+reg [3:0] num_cent;
+reg [3:0] num_dez;
+reg [3:0] num_uni;
+reg [3:0] num_dec;
 
 always @(*) begin
+	if (enable) begin
+		num_cent = (seg / 100) % 10;
+		num_dez = (seg / 10) % 10;
+		num_uni = seg % 10;
+		num_dec = dec;
+	end
 
 	case (num_cent)
 		0: centenas = 7'b0000001;
@@ -57,7 +64,7 @@ always @(*) begin
 		default: unidades = 7'b1111111;
 	endcase
 
-	case (dec)
+	case (num_dec)
 		0: decimos = 7'b0000001;
 		1: decimos = 7'b1001111;
 		2: decimos = 7'b0010010;
@@ -70,8 +77,6 @@ always @(*) begin
 		9: decimos = 7'b0000100;
 		default: decimos = 7'b1111111;
 	endcase
-
 end
 
-endmodule 
-
+endmodule

@@ -11,6 +11,7 @@ module main(
 );
 
 wire contando_fio;
+wire enable_fio;
 wire	[2:0] estado_fio;
 wire	[3:0] decimos_fio;
 wire	[9:0] segundos_fio;
@@ -34,6 +35,7 @@ estados estados(
 	.pausa(pausa),
 	.para(para),
 	.contando(contando_fio),
+	.enable(enable_fio),
 	.estado(estado_fio)
 );
 
@@ -45,6 +47,7 @@ estados estados(
 sete_segmentos(
 	.dec(decimos_fio),
 	.seg(segundos_fio),
+	.enable(enable_fio),
 	.centenas(centenas),
 	.decimos(decimos),
 	.dezenas(dezenas),
