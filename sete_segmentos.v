@@ -1,12 +1,17 @@
 module sete_segmentos (
 	input [9:0] seg,
 	input [3:0] dec,
-	input enable, 
+	input enable,
+	input [2:0] estado_atual,
 	
 	output reg [0:6] centenas,
 	output reg [0:6] dezenas,
 	output reg [0:6] unidades,
-	output reg [0:6] decimos
+	output reg [0:6] decimos,
+	output reg reset,
+	output reg conta,
+	output reg pausa,
+	output reg para
 );
 
 reg [3:0] num_cent;
@@ -76,6 +81,33 @@ always @(*) begin
 		8: decimos = 7'b0000000;
 		9: decimos = 7'b0000100;
 		default: decimos = 7'b1111111;
+	endcase
+	
+	case (estado_atual)
+		0: begin
+			reset = 1;
+			conta = 0;
+			pausa = 0;
+			para = 0;
+		end
+		1: begin
+			reset = 0;
+			conta = 1;
+			pausa = 0;
+			para = 0;
+		end
+		2: begin
+			reset = 0;
+			conta = 0;
+			pausa = 1;
+			para = 0;
+		end
+		3: begin
+			reset = 0;
+			conta = 0;
+			pausa = 0;
+			para = 1;
+		end
 	endcase
 end
 
